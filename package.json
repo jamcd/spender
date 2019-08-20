@@ -36,9 +36,11 @@
   },
   "homepage": "https://github.com/jamcd/spender#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "express": "^4.17.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
