@@ -1,3 +1,4 @@
 node_modules
 build
-src/userOauthDetails.js # Sensitive user information
+# Sensitive user information
+src/userOauthDetails.js
