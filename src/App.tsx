@@ -1,31 +1,17 @@
-import React from "react";
-import "./App.css";
-import axios from "axios";
-import MonzoLogin from "./components/MonzoLogin";
-
-const Test: React.FC = () => {
-  const [text, setText] = React.useState("");
-
-  React.useEffect(() => {
-    axios
-      .get("/ping")
-      .then(response => {
-        setText(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
-  return <p>{text || "Loading..."}</p>;
-};
+import React from 'react';
+import './App.css';
+import MonzoLogin from './components/MonzoLogin';
+import OauthConfirmation from './components/OauthConfirmation';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Test />
-      <MonzoLogin />
-    </div>
+    <Router>
+      <div className="App">
+        <Route exact path="/" component={MonzoLogin} />
+        <Route exact path="/oauth/callback" component={OauthConfirmation} />
+      </div>
+    </Router>
   );
 };
 
