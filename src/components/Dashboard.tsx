@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import createMonzoAxiosInstance from '../utils/createMonzoAxiosInstance';
 
 const Dashboard = (props: any) => {
   const [accessTokenConfig] = React.useState(localStorage.getItem('accessToken'));
@@ -12,10 +12,7 @@ const Dashboard = (props: any) => {
     spendToday: 0
   });
   const { token_type: tokenType, access_token: accessToken } = JSON.parse(accessTokenConfig || '');
-  const monzoAxios = axios.create({
-    baseURL: 'https://api.monzo.com',
-    headers: { Authorization: `${tokenType} ${accessToken}` }
-  });
+  const monzoAxios = createMonzoAxiosInstance(tokenType, accessToken);
 
   React.useEffect(() => {
     if (userName) return;
