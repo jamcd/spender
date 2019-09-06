@@ -12,7 +12,7 @@ const OauthConfirmation = (props: any) => {
   React.useEffect(() => {
     setOauthCode(urlQueryParams.code);
 
-    if (Object.keys(accessToken).length) {
+    if (accessToken.length) {
       console.log(JSON.parse(accessToken));
       return;
     }
