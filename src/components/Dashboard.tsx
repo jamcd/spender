@@ -11,8 +11,12 @@ const Dashboard = (props: any) => {
     currency: '',
     spendToday: 0
   });
+  const [balanceFormatted, setBalanceFormatted] = React.useState('');
   const { token_type: tokenType, access_token: accessToken } = JSON.parse(accessTokenConfig || '');
   const monzoAxios = createMonzoAxiosInstance(tokenType, accessToken);
+  const convertBalanceToCurrency = (balance: number, currencyCode: string) => {
+    return Intl.NumberFormat(undefined, { style: 'currency', currency: currencyCode }).format(balance);
+  };
 
   React.useEffect(() => {
     if (userName) return;
@@ -39,8 +43,9 @@ const Dashboard = (props: any) => {
       <h1>Dashboard</h1>
       {!isLoading && (
         <div className="userDetails">
-          <p>Hello {userName}</p>
-          <p>Your balance is £{(balanceDetails.balance / 100).toFixed(2)}</p>
+          <h2>Hello {userName}</h2>
+          <h3>Your balance is {convertBalanceToCurrency(balanceDetails.balance / 100, balanceDetails.currency)}</h3>
+          <p>You have spent {convertBalanceToCurrency(Math.abs(balanceDetails.spendToday) / 100, balanceDetails.currency)} today</p>
         </div>
       )}
     </div>
