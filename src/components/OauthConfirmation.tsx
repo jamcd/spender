@@ -2,6 +2,7 @@ import React from 'react';
 import qs from 'qs';
 import axios from 'axios';
 import userOauthDetails from '../userOauthDetails';
+import { withRouter } from 'react-router-dom';
 
 const OauthConfirmation = (props: any) => {
   const [oauthCode, setOauthCode] = React.useState('');
@@ -13,7 +14,7 @@ const OauthConfirmation = (props: any) => {
     setOauthCode(urlQueryParams.code);
 
     if (accessToken.length) {
-      console.log(JSON.parse(accessToken));
+      props.history.push('/dashboard');
       return;
     }
 
@@ -31,10 +32,11 @@ const OauthConfirmation = (props: any) => {
       .then(({ data }) => {
         console.log(JSON.stringify(data));
         localStorage.setItem('accessToken', JSON.stringify(data));
+        props.history.push('/dashboard');
       });
-  }, [accessToken, clientId, clientSecret, oauthCode, urlQueryParams.code]);
+  }, [accessToken, clientId, clientSecret, oauthCode, props.history, urlQueryParams.code]);
 
   return <p>Thank you for logging in. Redirecting you to the Spender dashboard.</p>;
 };
 
-export default OauthConfirmation;
+export default withRouter(OauthConfirmation);

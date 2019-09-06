@@ -4,32 +4,48 @@ import axios from 'axios';
 const Dashboard = (props: any) => {
   const [accessTokenConfig] = React.useState(localStorage.getItem('accessToken'));
   const [userName, setUserName] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [balanceDetails, setBalanceDetails] = React.useState({
+    balance: 0,
+    totalBalance: 0,
+    currency: '',
+    spendToday: 0
+  });
   const { token_type: tokenType, access_token: accessToken } = JSON.parse(accessTokenConfig || '');
+  const monzoAxios = axios.create({
+    baseURL: 'https://api.monzo.com',
+    headers: { Authorization: `${tokenType} ${accessToken}` }
+  });
 
   React.useEffect(() => {
-    axios
-      .get('https://api.monzo.com/accounts', {
-        headers: { Authorization: `${tokenType} ${accessToken}` }
-      })
+    if (userName) return;
+
+    monzoAxios
+      .get('/accounts')
       .then(({ data }) => {
         const primaryAccount = data.accounts.find((account: { closed: boolean }) => !account.closed);
-        const primaryAccountId = primaryAccount.id;
-        const {
-          // preferred_first_name: preferredFirstName,
-          preferred_name: preferredName
-          // user_id: userId,
-        } = primaryAccount.owners[0];
+        const { preferred_name: preferredName } = primaryAccount.owners[0];
 
         setUserName(preferredName);
 
-        // localStorage.setItem('accessToken', JSON.stringify(data));
+        return monzoAxios.get('/balance', { params: { account_id: primaryAccount.id } });
+      })
+      .then(({ data }) => {
+        const { balance, total_balance: totalBalance, currency, spend_today: spendToday } = data;
+        setBalanceDetails({ balance, totalBalance, currency, spendToday });
+        setIsLoading(false);
       });
-  }, [accessToken, tokenType]);
+  }, [accessToken, monzoAxios, tokenType, userName]);
 
   return (
     <div className="dashboard">
       <h1>Dashboard</h1>
-      <p>Hello {userName}</p>
+      {!isLoading && (
+        <div className="userDetails">
+          <p>Hello {userName}</p>
+          <p>Your balance is £{(balanceDetails.balance / 100).toFixed(2)}</p>
+        </div>
+      )}
     </div>
   );
 };
