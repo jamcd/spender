@@ -13,7 +13,7 @@ const MonzoLogin = () => {
   const monzoAuthUrl = 'https://auth.monzo.com';
 
   React.useEffect(() => {
-    localStorage.removeItem('accessToken');
+    sessionStorage.removeItem('accessToken');
   });
 
   return (

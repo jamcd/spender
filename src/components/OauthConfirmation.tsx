@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 const OauthConfirmation = (props: any) => {
   const [oauthCode, setOauthCode] = React.useState('');
-  const [accessToken] = React.useState(localStorage.getItem('accessToken') || '');
+  const [accessToken] = React.useState(sessionStorage.getItem('accessToken') || '');
   const { clientId, clientSecret } = userOauthDetails;
   const urlQueryParams = qs.parse(props.location.search, { ignoreQueryPrefix: true });
 
@@ -31,7 +31,7 @@ const OauthConfirmation = (props: any) => {
       )
       .then(({ data }) => {
         console.log(JSON.stringify(data));
-        localStorage.setItem('accessToken', JSON.stringify(data));
+        sessionStorage.setItem('accessToken', JSON.stringify(data));
         props.history.push('/dashboard');
       });
   }, [accessToken, clientId, clientSecret, oauthCode, props.history, urlQueryParams.code]);

@@ -2,7 +2,7 @@ import React from 'react';
 import createMonzoAxiosInstance from '../utils/createMonzoAxiosInstance';
 
 const Dashboard = (props: any) => {
-  const [accessTokenConfig] = React.useState(localStorage.getItem('accessToken'));
+  const [accessTokenConfig] = React.useState(sessionStorage.getItem('accessToken'));
   const [userName, setUserName] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
   const [balanceDetails, setBalanceDetails] = React.useState({
