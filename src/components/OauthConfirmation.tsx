@@ -1,6 +1,6 @@
 import React from 'react';
 import qs from 'qs';
-import axios from 'axios';
+import createMonzoAxiosInstance from '../utils/createMonzoAxiosInstance';
 import userOauthDetails from '../userOauthDetails';
 import { withRouter } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ const OauthConfirmation = (props: any) => {
   const [accessToken] = React.useState(sessionStorage.getItem('accessToken') || '');
   const { clientId, clientSecret } = userOauthDetails;
   const urlQueryParams = qs.parse(props.location.search, { ignoreQueryPrefix: true });
+  const monzoAxios = createMonzoAxiosInstance();
 
   React.useEffect(() => {
     setOauthCode(urlQueryParams.code);
@@ -18,9 +19,9 @@ const OauthConfirmation = (props: any) => {
       return;
     }
 
-    axios
+    monzoAxios
       .post(
-        'https://api.monzo.com/oauth2/token',
+        '/oauth2/token',
         qs.stringify({
           grant_type: 'authorization_code',
           client_id: clientId,
@@ -34,7 +35,7 @@ const OauthConfirmation = (props: any) => {
         sessionStorage.setItem('accessToken', JSON.stringify(data));
         props.history.push('/dashboard');
       });
-  }, [accessToken, clientId, clientSecret, oauthCode, props.history, urlQueryParams.code]);
+  }, [accessToken, clientId, clientSecret, monzoAxios, oauthCode, props.history, urlQueryParams.code]);
 
   return <p>Thank you for logging in. Redirecting you to the Spender dashboard.</p>;
 };
