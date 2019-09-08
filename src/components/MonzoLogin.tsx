@@ -1,5 +1,10 @@
 import React from 'react';
 import userOauthDetails from '../userOauthDetails';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 // TODO: Should be sending an unguessable string in a form field called 'state' for extra security. When Monzo
 // redirects back to the app it will send a 'state' value back which needs to match the value that we originally
@@ -17,12 +22,25 @@ const MonzoLogin = () => {
   });
 
   return (
-    <form action={monzoAuthUrl}>
-      <input type="hidden" name="client_id" value={clientId} />
-      <input type="hidden" name="redirect_uri" value={redirectUri} />
-      <input type="hidden" name="response_type" value="code" />
-      <button>Sign in</button>
-    </form>
+    <Container className="login d-flex justify-content-center mt-10">
+      <Row>
+        <Col>
+          <form action={monzoAuthUrl}>
+            <Card style={{ width: '18rem' }}>
+              {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+              <Card.Body>
+                <Card.Title>Log in to your Monzo account</Card.Title>
+                <Card.Text>Log in to your Monzo account to see all of your recent transactions</Card.Text>
+                <Button variant="primary">Sign in</Button>
+              </Card.Body>
+            </Card>
+            <input type="hidden" name="client_id" value={clientId} />
+            <input type="hidden" name="redirect_uri" value={redirectUri} />
+            <input type="hidden" name="response_type" value="code" />
+          </form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
