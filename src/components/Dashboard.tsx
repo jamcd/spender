@@ -45,8 +45,8 @@ const Dashboard = (props: any) => {
       <h1>Dashboard</h1>
       {!isLoading && [
         <div className="user-details" key="userDetails">
-          <h2>Hello {userName}</h2>
-          <h3>Your balance is {convertBalanceToCurrency(balanceDetails.balance / 100, balanceDetails.currency)}</h3>
+          <h3>Hello {userName}</h3>
+          <h4>Your balance is {convertBalanceToCurrency(balanceDetails.balance / 100, balanceDetails.currency)}</h4>
           <p>
             You have spent{' '}
             {convertBalanceToCurrency(Math.abs(balanceDetails.spendToday) / 100, balanceDetails.currency)} today
