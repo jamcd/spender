@@ -34,7 +34,7 @@ const Dashboard = (props: any) => {
 
   return (
     <div className="transactions">
-      <h2>Transactions</h2>
+      <h4>Transactions</h4>
       {!isLoading &&
         transactions.map(transaction => (
           <div className="transaction" key={transaction.id}>

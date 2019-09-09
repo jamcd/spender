@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import MonzoLogin from './components/MonzoLogin';
 import OauthConfirmation from './components/OauthConfirmation';
 import Dashboard from './components/Dashboard';
