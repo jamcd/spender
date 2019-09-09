@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import monzoLogo from '../monzo.png';
+import monzoLogo from '../monzo-logo.png';
 
 // TODO: Should be sending an unguessable string in a form field called 'state' for extra security. When Monzo
 // redirects back to the app it will send a 'state' value back which needs to match the value that we originally
