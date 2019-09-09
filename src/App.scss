@@ -20,6 +20,21 @@ $theme-colors: (
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  &__title {
+    font-size: 5rem;
+    margin-top: 10vh;
+    color: white;
+  }
+  &__subtitle {
+    margin-top: 2vh;
+    color: white;
+  }
+  .login__card {
+    width: 25rem;
+    margin-top: 15vh;
+    border: none;
+  }
 }
 
 /* finally, import Bootstrap to set the changes! */

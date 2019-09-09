@@ -24,11 +24,13 @@ const MonzoLogin = () => {
 
   return (
     <div className="login">
-      <Container className="d-flex h-100 flex-column justify-content-center align-items-center">
+      <Container className="login__container">
         <Row>
-          <Col>
-            <form action={monzoAuthUrl}>
-              <Card style={{ width: '25rem' }}>
+          <Col className="d-flex align-items-center flex-column">
+            <h1 className="login__title">Spender</h1>
+            <h3 className="login__subtitle">Bringing you the future of banking</h3>
+            <form className="login__form" action={monzoAuthUrl}>
+              <Card className="login__card">
                 <Card.Img variant="top" src={monzoLogo} />
                 <Card.Body>
                   <Card.Title>Log in to your Monzo account</Card.Title>
