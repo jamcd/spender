@@ -1,5 +1,7 @@
 import React from 'react';
 import createMonzoAxiosInstance from '../utils/createMonzoAxiosInstance';
+import ListGroup from 'react-bootstrap/ListGroup';
+import moment from 'moment';
 
 interface Transaction {
   id: string;
@@ -16,31 +18,46 @@ const Dashboard = (props: any) => {
   const [accessTokenConfig] = React.useState(sessionStorage.getItem('accessToken'));
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [lastRetreivedTransactionId, setLastRetreivedTransactionId] = React.useState('');
+  const [earliestTransactionTime, setEarliestTransactionTime] = React.useState(
+    moment
+      .utc()
+      .subtract(1, 'month')
+      .format()
+  );
   const { token_type: tokenType, access_token: accessToken } = JSON.parse(accessTokenConfig || '');
   const monzoAxios = createMonzoAxiosInstance(tokenType, accessToken);
 
   React.useEffect(() => {
     if (transactions.length) return;
 
+    console.log(earliestTransactionTime);
+
     monzoAxios
-      .get('/transactions', { params: { account_id: props.accountId, limit: 20, expand: ['merchant'] } })
+      .get('/transactions', {
+        params: { account_id: props.accountId, since: earliestTransactionTime, expand: ['merchant'] }
+      })
       .then(({ data }) => {
-        setTransactions(data.transactions);
+        setTransactions(data.transactions.reverse());
         setIsLoading(false);
-        setLastRetreivedTransactionId(data.transactions[data.transactions.length - 1].id);
+        // setLastRetreivedTransactionId(data.transactions[data.transactions.length - 1].id);
       });
-  }, [accessToken, monzoAxios, props.accountId, setLastRetreivedTransactionId, tokenType, transactions]);
+  }, [accessToken, earliestTransactionTime, monzoAxios, props.accountId, tokenType, transactions]);
 
   return (
     <div className="transactions">
       <h4>Transactions</h4>
-      {!isLoading &&
-        transactions.map(transaction => (
-          <div className="transaction" key={transaction.id}>
-            {transaction.merchant && transaction.merchant.name}
-          </div>
-        ))}
+      <ListGroup>
+        {!isLoading &&
+          transactions.map(
+            transaction =>
+              transaction.merchant &&
+              transaction.merchant.name && (
+                <ListGroup.Item className="transaction" key={transaction.id}>
+                  {transaction.merchant.name}
+                </ListGroup.Item>
+              )
+          )}
+      </ListGroup>
     </div>
   );
 };

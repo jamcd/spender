@@ -1,6 +1,9 @@
 import React from 'react';
 import createMonzoAxiosInstance from '../utils/createMonzoAxiosInstance';
 import TranscationSummary from './TranscationSummary';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Dashboard = (props: any) => {
   const [accessTokenConfig] = React.useState(sessionStorage.getItem('accessToken'));
@@ -41,20 +44,28 @@ const Dashboard = (props: any) => {
   }, [accessToken, accountId, monzoAxios, tokenType, userName]);
 
   return (
-    <div className="dashboard">
-      <h1>Dashboard</h1>
-      {!isLoading && [
-        <div className="user-details" key="userDetails">
-          <h3>Hello {userName}</h3>
-          <h4>Your balance is {convertBalanceToCurrency(balanceDetails.balance / 100, balanceDetails.currency)}</h4>
-          <p>
-            You have spent{' '}
-            {convertBalanceToCurrency(Math.abs(balanceDetails.spendToday) / 100, balanceDetails.currency)} today
-          </p>
-        </div>,
-        <TranscationSummary key="transactionSummary" accountId={accountId} />
-      ]}
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <div className="dashboard">
+            <h1>Dashboard</h1>
+            {!isLoading && [
+              <div className="user-details" key="userDetails">
+                <h3>Hello {userName}</h3>
+                <h4>
+                  Your balance is {convertBalanceToCurrency(balanceDetails.balance / 100, balanceDetails.currency)}
+                </h4>
+                <p>
+                  You have spent{' '}
+                  {convertBalanceToCurrency(Math.abs(balanceDetails.spendToday) / 100, balanceDetails.currency)} today
+                </p>
+              </div>,
+              <TranscationSummary key="transactionSummary" accountId={accountId} style={{ maxWidth: '10rem' }} />
+            ]}
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
