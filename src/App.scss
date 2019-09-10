@@ -5,8 +5,10 @@
 
 $theme-colors: (
   primary: #2991cc,
-  secondary: #14233c
+  secondary: #092f6e
 );
+
+$body-color: var(--secondary);
 
 .App {
   text-align: center;
@@ -37,8 +39,11 @@ $theme-colors: (
   }
 }
 
+.transactions-summary {
+  padding-top: 3rem;
+}
 .transactions {
-  margin-top: 1rem;
+  margin-top: 2.5rem;
   overflow: auto;
   height: 40rem;
   width: 30rem;
@@ -54,6 +59,31 @@ $theme-colors: (
     position: relative;
     display: inline-block;
     margin-left: 0.1rem;
+  }
+}
+
+.dashboard {
+  &__hero {
+    background-image: url(./flat-background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    // Temporary sizes until responsive styles are done
+    background-size: 2540px;
+    background-position: -450px 0;
+    padding: 3rem;
+    color: white;
+  }
+  &__account-title {
+    margin-bottom: 0;
+  }
+  &__account-balance {
+    margin-bottom: 1rem;
+  }
+  &__todays-spend {
+    margin-bottom: 0;
+  }
+  &__account-credentials {
+    color: #7195bd;
   }
 }
 
