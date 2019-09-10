@@ -54,6 +54,17 @@ $body-color: var(--secondary);
   sub {
     letter-spacing: 0.07rem;
   }
+  &__name {
+    text-align: left;
+  }
+  &__title,
+  &__notes {
+    margin-bottom: 0;
+  }
+  &__notes {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
   sub {
     top: 0rem;
     position: relative;
